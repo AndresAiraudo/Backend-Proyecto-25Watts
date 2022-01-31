@@ -19,7 +19,8 @@ class ContactController extends Controller
                 'message'=>$request->message
 
             ]);
-            dd('Contacto guardado en la base de datos'); //cambar por un return
+            //dd('Contacto guardado en la base de datos'); //cambar por un return
+            return view('ver-datos', ['data'=>$request]);
         }
         else{
             dd('el usuario ya existe'); //cambiar por un return

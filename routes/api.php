@@ -18,4 +18,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/save-contact', 'App\Http\Controllers\ContactController@saveContacts')->name('savecontacts');
+Route::post('/save-contact', 'App\Http\Controllers\ContactController@saveContacts');
+
+Route::get('/home', function () {
+    return view('welcome');
+});
+
