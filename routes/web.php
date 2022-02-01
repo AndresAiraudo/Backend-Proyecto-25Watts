@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/save-contact', 'App\Http\Controllers\ContactController@saveContacts');
+// Route::post('/save-contact', 'App\Http\Controllers\ContactController@saveContacts');

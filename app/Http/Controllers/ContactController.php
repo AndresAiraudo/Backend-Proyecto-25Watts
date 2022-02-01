@@ -9,21 +9,36 @@ class ContactController extends Controller
 {
     public function saveContacts(Request $request){
 
-        $contact = Contact::where(['email'=>$request->email])->first();
+        //$contact = Contact::where(['email'=>$request->email])->first();
 
-        if(empty($contact)){
-            Contact::create([
-                'name'=>$request->name,
-                'email'=>$request->email,
-                'phone'=>$request->phone,
-                'message'=>$request->message
+        try{
+            if(isset($request['name'], $request['email'], $request['phone'], $request['message'])){
+                Contact::create([
+                    'name'=>$request->name,
+                    'email'=>$request->email,
+                    'phone'=>$request->phone,
+                    'message'=>$request->message
 
-            ]);
-            //dd('Contacto guardado en la base de datos'); //cambar por un return
-            return view('ver-datos', ['data'=>$request]);
+                ]);
+
+                $details = [
+                    'name' => 'Contact Name: ' . $request->name,
+                    'email' => 'Contact Email: ' . $request->email,
+                    'phone' => 'Phone: ' . $request->phone,
+                    'message' => 'Message: ' . $request->message
+                ];
+            }
+            else{
+                return('el usuario ya existe'); 
+            }
         }
-        else{
-            dd('el usuario ya existe'); //cambiar por un return
+        catch(Exception $error){
+            return($error);
         }
+
+        
+        \Mail::to('example@example.com')->send(new \App\Mail\sendContact($details));
+
+        return('El contanto se guardo correctamente');
     }
 }
